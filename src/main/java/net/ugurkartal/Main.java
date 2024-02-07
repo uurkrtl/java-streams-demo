@@ -1,0 +1,50 @@
+package net.ugurkartal;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Main {
+    public static void main(String[] args) {
+        List<Integer> numbers = List.of(1, 2, 3, 4, 5);
+
+
+        //Step 1: Filter a list of numbers and only output the even numbers.
+        List<Integer> evenNumbers = numbers.stream()
+                        .filter(n -> n % 2 == 0)
+                        .toList();
+        System.out.println("Even numbers: " + evenNumbers);
+
+        //Step 2: Use 'map' and double each number in the list.
+        List<Integer> evenNumbersDouble = numbers.stream()
+                .filter(n -> n % 2 == 0)
+                .map(n -> n * 2)
+                .toList();
+        System.out.println("Double each even number: " + evenNumbersDouble);
+
+        //Step 3: Sort the list in ascending order.
+        List<Integer> evenNumbersDoubleOrdered = numbers.stream()
+                .filter(n -> n % 2 == 0)
+                .map(n -> n * 2)
+                .sorted()
+                .toList();
+        System.out.println("Double each even number and sort: " + evenNumbersDoubleOrdered);
+
+        //Step 4: Perform a 'reduce' operation to calculate the sum of all numbers in the list.
+        int sum = numbers.stream()
+                .reduce(0, (a, b) -> a + b);
+        System.out.println("Sum of all numbers: " + sum);
+
+        //Step 5: Use 'forEach' and output each processed number.
+        numbers.stream()
+                .filter(n -> n % 2 == 0)
+                .map(n -> n * 2)
+                .sorted()
+                .forEach(System.out::println);
+
+        // Collect the processed numbers into a new list using 'collect'.
+        List<Integer> processedNumbers = numbers.stream()
+                .map(n -> n * 2)
+                .collect(Collectors.toList());
+        System.out.println("Processed numbers (Collect): " + processedNumbers);
+    }
+}
