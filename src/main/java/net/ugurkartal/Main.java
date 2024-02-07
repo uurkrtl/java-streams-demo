@@ -1,5 +1,8 @@
 package net.ugurkartal;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,5 +49,25 @@ public class Main {
                 .map(n -> n * 2)
                 .collect(Collectors.toList());
         System.out.println("Processed numbers (Collect): " + processedNumbers);
+
+
+        // Use streams to read and output the file line by line
+        Path filePath = Path.of("students.csv");
+
+        try {
+            List<Student> students = Files.lines(filePath)
+                    .skip(1) // Skip the header
+                    .filter(line -> !line.isBlank()) // Remove empty lines
+                    .map(line -> {
+                        String[] parts = line.split(",");
+                        return new Student(parts[0], parts[1], parts[2], Integer.parseInt(parts[3])); // Convert each line into the class Student
+                    })
+                    .distinct() // Remove duplicates
+                    .collect(Collectors.toList());
+
+            students.forEach(System.out::println);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
